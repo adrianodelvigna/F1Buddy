@@ -19,22 +19,14 @@ public class ErgastService {
         ergastApi = retrofit.create(ErgastApi.class);
     }
 
-    private boolean isValid(Integer season) {
-        return season >= 1950 && season <= 2018;
-    }
-
     public Observable<RaceTable> getRaceTableForSeason(Integer season) {
-        if (isValid(season)) {
-            return ergastApi.getRaceScheduleForSeason(season.toString())
-                    .map(raceSchedule -> raceSchedule.getMRData().getRaceTable());
-        }
-
-        return Observable.empty();
+        return ergastApi.getRaceScheduleForSeason(season.toString())
+                .map(raceSchedule -> raceSchedule.getMRData().getRaceTable());
     }
 
     public
     Observable<udacity.androidnanodegree.adriano.capstone.models.ConstructorStandings.StandingsTable>
-    getConstructorStandingsListForSeason(Integer season) {
+    getConstructorStandingsTableForSeason(Integer season) {
         return ergastApi
                 .getConstructorStandingsForSeason(season.toString())
                 .map(standingsList -> standingsList
@@ -44,7 +36,7 @@ public class ErgastService {
 
     public
     Observable<udacity.androidnanodegree.adriano.capstone.models.DriverStandings.StandingsTable>
-    getDriverStandingsListForSeason(Integer season) {
+    getDriverStandingsTableForSeason(Integer season) {
         return ergastApi
                 .getDriverStandingsForSeason(season.toString())
                 .map(standingsList -> standingsList
