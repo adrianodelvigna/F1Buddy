@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Capstone</string>
+    <string name="raceschedule_loading">Loading...</string>
 </resources>

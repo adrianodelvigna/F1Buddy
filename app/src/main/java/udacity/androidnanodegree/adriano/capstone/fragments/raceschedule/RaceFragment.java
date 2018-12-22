@@ -1,5 +1,6 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
+import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
 
 import java.util.ArrayList;
 
@@ -28,6 +34,12 @@ public class RaceFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+    private RaceScheduleViewModel raceScheduleViewModel;
+
+    private Unbinder unbinder;
+    @BindView(R.id.loading) LinearLayout loading;
+    @BindView(R.id.list) RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -53,23 +65,36 @@ public class RaceFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        raceScheduleViewModel = ViewModelProviders.of(getActivity()).get(RaceScheduleViewModel.class);
+        raceScheduleViewModel.getIsLoadingLiveData().observe(this, isLoading -> {
+            if (isLoading != null) {
+                loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+            }
+        });
+        raceScheduleViewModel.getRaceTableLiveData().observe(this, raceTable -> {
+            if (raceTable != null) {
+                recyclerView.swapAdapter(new RaceRecyclerViewAdapter(raceTable.getRaces(), mListener), true);
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_race_list, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new RaceRecyclerViewAdapter(new ArrayList<>(), mListener));
+            recyclerView.setAdapter(null);
         }
         return view;
     }
@@ -90,6 +115,12 @@ public class RaceFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     /**
