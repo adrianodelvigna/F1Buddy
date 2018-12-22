@@ -1,5 +1,6 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.driverstandings;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,11 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
-
-import java.util.ArrayList;
+import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.viewmodels.DriverStandingsViewModel;
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +32,10 @@ public class DriverFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+    private Unbinder unbinder;
+    @BindView(R.id.loading) LinearLayout loading;
+    @BindView(R.id.list) RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -53,24 +61,39 @@ public class DriverFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        DriverStandingsViewModel driverStandingsViewModel = ViewModelProviders.of(getActivity()).get(DriverStandingsViewModel.class);
+        driverStandingsViewModel.getIsLoadingLiveData().observe(this, isLoading -> {
+            if (isLoading != null) {
+                loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+            }
+        });
+        driverStandingsViewModel.getDriverStandingsTableLiveData().observe(this, driverTable -> {
+            if (driverTable != null) {
+                recyclerView.swapAdapter(
+                        new DriverRecyclerViewAdapter(driverTable.getStandingsLists().get(0).getDriverStandings(),
+                                mListener),
+                        true);
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_driver_list, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new DriverRecyclerViewAdapter(new ArrayList<>(), mListener));
+        Context context = view.getContext();
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
+        recyclerView.setAdapter(null);
+
         return view;
     }
 
@@ -90,6 +113,12 @@ public class DriverFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     /**

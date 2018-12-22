@@ -19,8 +19,6 @@ import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
 
-import java.util.ArrayList;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -34,8 +32,6 @@ public class RaceFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
-    private RaceScheduleViewModel raceScheduleViewModel;
 
     private Unbinder unbinder;
     @BindView(R.id.loading) LinearLayout loading;
@@ -66,7 +62,7 @@ public class RaceFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        raceScheduleViewModel = ViewModelProviders.of(getActivity()).get(RaceScheduleViewModel.class);
+        RaceScheduleViewModel raceScheduleViewModel = ViewModelProviders.of(getActivity()).get(RaceScheduleViewModel.class);
         raceScheduleViewModel.getIsLoadingLiveData().observe(this, isLoading -> {
             if (isLoading != null) {
                 loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
@@ -87,15 +83,14 @@ public class RaceFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(null);
+        Context context = view.getContext();
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
+        recyclerView.setAdapter(null);
+
         return view;
     }
 
