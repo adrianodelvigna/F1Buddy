@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Capstone</string>
+    <string name="app_name">F1 Buddy</string>
     <string name="raceschedule_loading">Loading...</string>
+    <string name="about">About</string>
 </resources>
