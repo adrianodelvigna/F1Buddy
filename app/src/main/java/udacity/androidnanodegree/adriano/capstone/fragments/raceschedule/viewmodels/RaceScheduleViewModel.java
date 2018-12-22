@@ -4,7 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.RaceScheduleService;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceTable;
 
@@ -41,6 +43,8 @@ public class RaceScheduleViewModel extends ViewModel {
         compositeDisposable.add(
         raceScheduleService
                 .getRaceTableForSeason(2018)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(raceTable -> {
                     raceTableMutableLiveData.setValue(raceTable);
                     isLoadingMutableLiveData.setValue(false);
