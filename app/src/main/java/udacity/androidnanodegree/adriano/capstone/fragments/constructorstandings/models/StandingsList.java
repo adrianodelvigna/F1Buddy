@@ -1,5 +1,5 @@
 
-package udacity.androidnanodegree.adriano.capstone.models.DriverStandings;
+package udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models;
 
 import java.util.List;
 import com.squareup.moshi.Json;
@@ -10,8 +10,8 @@ public class StandingsList {
     private String season;
     @Json(name = "round")
     private String round;
-    @Json(name = "DriverStandings")
-    private List<DriverStanding> driverStandings = null;
+    @Json(name = "ConstructorStandings")
+    private List<ConstructorStanding> constructorStandings = null;
 
     public String getSeason() {
         return season;
@@ -29,12 +29,12 @@ public class StandingsList {
         this.round = round;
     }
 
-    public List<DriverStanding> getDriverStandings() {
-        return driverStandings;
+    public List<ConstructorStanding> getConstructorStandings() {
+        return constructorStandings;
     }
 
-    public void setDriverStandings(List<DriverStanding> driverStandings) {
-        this.driverStandings = driverStandings;
+    public void setConstructorStandings(List<ConstructorStanding> constructorStandings) {
+        this.constructorStandings = constructorStandings;
     }
 
 }

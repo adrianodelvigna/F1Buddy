@@ -1,5 +1,5 @@
 
-package udacity.androidnanodegree.adriano.capstone.models.RaceSchedule;
+package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models;
 
 import java.util.List;
 import com.squareup.moshi.Json;

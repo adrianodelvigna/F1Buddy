@@ -3,9 +3,9 @@ package udacity.androidnanodegree.adriano.capstone;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import udacity.androidnanodegree.adriano.capstone.models.ConstructorStandings.ConstructorStandings;
-import udacity.androidnanodegree.adriano.capstone.models.DriverStandings.DriverStandings;
-import udacity.androidnanodegree.adriano.capstone.models.RaceSchedule.RaceSchedule;
+import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models.ConstructorStandings;
+import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStandings;
+import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceSchedule;
 
 
 public interface ErgastApi {

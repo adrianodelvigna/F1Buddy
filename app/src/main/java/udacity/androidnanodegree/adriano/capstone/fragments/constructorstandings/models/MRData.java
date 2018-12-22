@@ -1,5 +1,5 @@
 
-package udacity.androidnanodegree.adriano.capstone.models.RaceSchedule;
+package udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models;
 
 import com.squareup.moshi.Json;
 
@@ -17,8 +17,8 @@ public class MRData {
     private String offset;
     @Json(name = "total")
     private String total;
-    @Json(name = "RaceTable")
-    private RaceTable raceTable;
+    @Json(name = "StandingsTable")
+    private StandingsTable standingsTable;
 
     public String getXmlns() {
         return xmlns;
@@ -68,12 +68,12 @@ public class MRData {
         this.total = total;
     }
 
-    public RaceTable getRaceTable() {
-        return raceTable;
+    public StandingsTable getStandingsTable() {
+        return standingsTable;
     }
 
-    public void setRaceTable(RaceTable raceTable) {
-        this.raceTable = raceTable;
+    public void setStandingsTable(StandingsTable standingsTable) {
+        this.standingsTable = standingsTable;
     }
 
 }

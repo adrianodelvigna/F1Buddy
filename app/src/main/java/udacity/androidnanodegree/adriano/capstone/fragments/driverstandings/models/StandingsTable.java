@@ -1,5 +1,5 @@
 
-package udacity.androidnanodegree.adriano.capstone.models.DriverStandings;
+package udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models;
 
 import java.util.List;
 import com.squareup.moshi.Json;

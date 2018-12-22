@@ -1,9 +1,9 @@
 
-package udacity.androidnanodegree.adriano.capstone.models.RaceSchedule;
+package udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models;
 
 import com.squareup.moshi.Json;
 
-public class RaceSchedule {
+public class ConstructorStandings {
 
     @Json(name = "MRData")
     private MRData mRData;
