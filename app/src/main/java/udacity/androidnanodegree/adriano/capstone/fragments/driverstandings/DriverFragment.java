@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
+import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.StandingsTable;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.viewmodels.DriverStandingsViewModel;
 
 /**
@@ -36,6 +37,8 @@ public class DriverFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.loading) LinearLayout loading;
     @BindView(R.id.list) RecyclerView recyclerView;
+
+    private DriverStandingsViewModel driverStandingsViewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,21 +65,9 @@ public class DriverFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        DriverStandingsViewModel driverStandingsViewModel = ViewModelProviders.of(getActivity()).get(DriverStandingsViewModel.class);
-        driverStandingsViewModel.getIsLoadingLiveData().observe(this, isLoading -> {
-            if (isLoading != null) {
-                loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-                recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
-            }
-        });
-        driverStandingsViewModel.getDriverStandingsTableLiveData().observe(this, driverTable -> {
-            if (driverTable != null) {
-                recyclerView.swapAdapter(
-                        new DriverRecyclerViewAdapter(driverTable.getStandingsLists().get(0).getDriverStandings(),
-                                mListener),
-                        true);
-            }
-        });
+        driverStandingsViewModel = ViewModelProviders.of(getActivity()).get(DriverStandingsViewModel.class);
+        driverStandingsViewModel.getIsLoadingLiveData().observe(this, this::updateLoadingStatus);
+        driverStandingsViewModel.getDriverStandingsTableLiveData().observe(this, this::updateRecyclerViewStatus);
     }
 
     @Override
@@ -92,9 +83,27 @@ public class DriverFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        recyclerView.setAdapter(null);
+
+        updateLoadingStatus(driverStandingsViewModel.getIsLoadingLiveData().getValue());
+        updateRecyclerViewStatus(driverStandingsViewModel.getDriverStandingsTableLiveData().getValue());
 
         return view;
+    }
+
+    private void updateRecyclerViewStatus(StandingsTable standingsTable) {
+        if (standingsTable != null) {
+            recyclerView.swapAdapter(
+                    new DriverRecyclerViewAdapter(standingsTable.getStandingsLists().get(0).getDriverStandings(),
+                            mListener),
+                    true);
+        }
+    }
+
+    private void updateLoadingStatus(Boolean isLoading) {
+        if (isLoading != null) {
+            loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        }
     }
 
 

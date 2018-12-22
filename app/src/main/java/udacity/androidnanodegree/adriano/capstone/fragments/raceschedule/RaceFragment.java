@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
+import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceTable;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
 
 /**
@@ -36,6 +37,8 @@ public class RaceFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.loading) LinearLayout loading;
     @BindView(R.id.list) RecyclerView recyclerView;
+
+    private RaceScheduleViewModel raceScheduleViewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,18 +65,9 @@ public class RaceFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        RaceScheduleViewModel raceScheduleViewModel = ViewModelProviders.of(getActivity()).get(RaceScheduleViewModel.class);
-        raceScheduleViewModel.getIsLoadingLiveData().observe(this, isLoading -> {
-            if (isLoading != null) {
-                loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-                recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
-            }
-        });
-        raceScheduleViewModel.getRaceTableLiveData().observe(this, raceTable -> {
-            if (raceTable != null) {
-                recyclerView.swapAdapter(new RaceRecyclerViewAdapter(raceTable.getRaces(), mListener), true);
-            }
-        });
+        raceScheduleViewModel = ViewModelProviders.of(getActivity()).get(RaceScheduleViewModel.class);
+        raceScheduleViewModel.getIsLoadingLiveData().observe(this, this::updateLoadingStatus);
+        raceScheduleViewModel.getRaceTableLiveData().observe(this, this::updateRecyclerViewStatus);
     }
 
     @Override
@@ -89,11 +83,25 @@ public class RaceFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        recyclerView.setAdapter(null);
+
+        updateLoadingStatus(raceScheduleViewModel.getIsLoadingLiveData().getValue());
+        updateRecyclerViewStatus(raceScheduleViewModel.getRaceTableLiveData().getValue());
 
         return view;
     }
 
+    private void updateRecyclerViewStatus(RaceTable raceTable) {
+        if (raceTable != null) {
+            recyclerView.swapAdapter(new RaceRecyclerViewAdapter(raceTable.getRaces(), mListener), true);
+        }
+    }
+
+    private void updateLoadingStatus(Boolean isLoading) {
+        if (isLoading != null) {
+            loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        }
+    }
 
     @Override
     public void onAttach(Context context) {

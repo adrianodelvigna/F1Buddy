@@ -12,13 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models.ConstructorStanding;
+import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models.StandingsTable;
 import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.viewmodels.ConstructorStandingsViewModel;
 
 /**
@@ -38,6 +37,8 @@ public class ConstructorFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.loading) LinearLayout loading;
     @BindView(R.id.list) RecyclerView recyclerView;
+
+    private ConstructorStandingsViewModel constructorStandingsViewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,21 +65,9 @@ public class ConstructorFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        ConstructorStandingsViewModel constructorStandingsViewModel = ViewModelProviders.of(getActivity()).get(ConstructorStandingsViewModel.class);
-        constructorStandingsViewModel.getIsLoadingLiveData().observe(this, isLoading -> {
-            if (isLoading != null) {
-                loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-                recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
-            }
-        });
-        constructorStandingsViewModel.getConstructorStandingsTableLiveData().observe(this, constructorTable -> {
-            if (constructorTable != null) {
-                recyclerView.swapAdapter(
-                        new ConstructorRecyclerViewAdapter(constructorTable.getStandingsLists().get(0).getConstructorStandings(),
-                                mListener),
-                        true);
-            }
-        });
+        constructorStandingsViewModel = ViewModelProviders.of(getActivity()).get(ConstructorStandingsViewModel.class);
+        constructorStandingsViewModel.getIsLoadingLiveData().observe(this, this::updateLoadingStatus);
+        constructorStandingsViewModel.getConstructorStandingsTableLiveData().observe(this, this::updateRecyclerViewStatus);
     }
 
     @Override
@@ -94,11 +83,28 @@ public class ConstructorFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        recyclerView.setAdapter(null);
+
+        updateLoadingStatus(constructorStandingsViewModel.getIsLoadingLiveData().getValue());
+        updateRecyclerViewStatus(constructorStandingsViewModel.getConstructorStandingsTableLiveData().getValue());
 
         return view;
     }
 
+    private void updateRecyclerViewStatus(StandingsTable standingsTable) {
+        if (standingsTable != null) {
+            recyclerView.swapAdapter(
+                    new ConstructorRecyclerViewAdapter(standingsTable.getStandingsLists().get(0).getConstructorStandings(),
+                            mListener),
+                    true);
+        }
+    }
+
+    private void updateLoadingStatus(Boolean isLoading) {
+        if (isLoading != null) {
+            loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
