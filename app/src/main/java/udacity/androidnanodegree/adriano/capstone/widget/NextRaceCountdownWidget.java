@@ -15,6 +15,11 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
+        // Get what's next race
+        // Get device's current time
+        // Calculate how much time until next race
+        // Update countdown accordingly
+
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.next_race_countdown_widget);
