@@ -1,16 +1,17 @@
 package udacity.androidnanodegree.adriano.capstone;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +21,6 @@ import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.Driv
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.RaceFragment;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
-import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceSchedule;
 
 public class MainActivity extends AppCompatActivity implements
         RaceFragment.OnListFragmentInteractionListener,
@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private MainActivityPageAdapter mainActivityPageAdapter;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,21 @@ public class MainActivity extends AppCompatActivity implements
 
         mainActivityPageAdapter = new MainActivityPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mainActivityPageAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {}
+
+            @Override
+            public void onPageSelected(int i) {
+                String pageTitle = viewPager.getAdapter().getPageTitle(i).toString();
+                logItemSelectionEvent("page_selection", pageTitle, "navigation");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {}
+        });
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     @Override
@@ -55,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
+                displayAboutActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -62,17 +80,29 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onListFragmentInteraction(Race item) {
-
+        logItemSelectionEvent(item.getRound(), item.getRaceName(), "race");
     }
 
     @Override
     public void onListFragmentInteraction(DriverStanding item) {
-
+        logItemSelectionEvent(item.getDriver().getDriverId(), item.getDriver().getCode(), "driver");
     }
 
     @Override
     public void onListFragmentInteraction(ConstructorStanding item) {
+        logItemSelectionEvent(item.getConstructor().getConstructorId(), item.getConstructor().getName(), "constructor");
+    }
 
+    private void displayAboutActivity() {
+        logItemSelectionEvent("action_about", "About", "navigation");
+    }
+
+    private void logItemSelectionEvent(String id, String name, String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     private static class MainActivityPageAdapter extends FragmentPagerAdapter {
