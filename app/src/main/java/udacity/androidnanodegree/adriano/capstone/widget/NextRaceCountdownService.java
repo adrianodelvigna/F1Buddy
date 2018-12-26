@@ -12,6 +12,8 @@ import org.threeten.bp.Instant;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
+import java.util.Locale;
+
 import udacity.androidnanodegree.adriano.capstone.R;
 
 public class NextRaceCountdownService extends Service {
@@ -68,13 +70,8 @@ public class NextRaceCountdownService extends Service {
         long hoursLeft = duration.minusDays(daysLeft).toHours();
         long minutesLeft = duration.minusDays(daysLeft).minusHours(hoursLeft).toMinutes();
 
-        // Update countdown display accordingly
-        String newGapDisplay = new StringBuilder()
-                .append(daysLeft).append("D")
-                .append(hoursLeft).append("H")
-                .append(minutesLeft).append("M")
-                .toString();
-        remoteViews.setTextViewText(R.id.appwidget_text, newGapDisplay);
+        String timeLeft = String.format(Locale.getDefault(), "%dD %02dH %02dM", daysLeft, hoursLeft, minutesLeft);
+        remoteViews.setTextViewText(R.id.appwidget_text, timeLeft);
 
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         stopSelf(startId);
