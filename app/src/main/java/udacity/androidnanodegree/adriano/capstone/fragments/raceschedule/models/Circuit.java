@@ -1,6 +1,8 @@
 
 package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models;
 
+import android.arch.persistence.room.Embedded;
+
 import com.squareup.moshi.Json;
 
 public class Circuit {
@@ -11,7 +13,9 @@ public class Circuit {
     private String url;
     @Json(name = "circuitName")
     private String circuitName;
+
     @Json(name = "Location")
+    @Embedded
     private Location location;
 
     public String getCircuitId() {
