@@ -7,11 +7,18 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.RemoteViews;
 
+import org.threeten.bp.Duration;
+import org.threeten.bp.Instant;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+
 import udacity.androidnanodegree.adriano.capstone.R;
 
 public class NextRaceCountdownService extends Service {
+    private static final String TAG = "NextRaceCountdownServic";
+
     public static final String COUNTDOWN_TICK = "udacity.androidnanodegree.adriano.capstone.widget.NextRaceCountdownService.COUNTDOWN_TICK";
-    public static final int UPDATE_RATE = 60000; // one minute: 60 * 1000 milliseconds
+    public static final long UPDATE_RATE = 60 * 1000; // one minute: 60 * 1000 milliseconds
 
     private Context context;
     private int startId;
@@ -42,10 +49,32 @@ public class NextRaceCountdownService extends Service {
                 R.layout.next_race_countdown_widget);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
-        // Get what's next race time
+        // Reference for synchronization: https://www.f1widget.com/
+
+        // Get what's next race time -- Melbourne
+        String date = "2019-03-17";
+        String time = "05:10:00Z";
+        ZonedDateTime raceZonedDateTime = Instant.parse(date + "T" + time).atZone(ZoneId.of("Z"));
+        ZonedDateTime localRaceZonedDateTime = raceZonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+
+
         // Get device's current time
+        ZonedDateTime currentZonedDateTime = ZonedDateTime.now();
+
         // Calculate how much time until next race
+        Duration duration = Duration.between(currentZonedDateTime, localRaceZonedDateTime);
+
+        long daysLeft = duration.toDays();
+        long hoursLeft = duration.minusDays(daysLeft).toHours();
+        long minutesLeft = duration.minusDays(daysLeft).minusHours(hoursLeft).toMinutes();
+
         // Update countdown display accordingly
+        String newGapDisplay = new StringBuilder()
+                .append(daysLeft).append("D")
+                .append(hoursLeft).append("H")
+                .append(minutesLeft).append("M")
+                .toString();
+        remoteViews.setTextViewText(R.id.appwidget_text, newGapDisplay);
 
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         stopSelf(startId);

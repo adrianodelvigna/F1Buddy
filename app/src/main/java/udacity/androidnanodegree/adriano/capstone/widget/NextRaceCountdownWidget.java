@@ -43,7 +43,7 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
-        // when the last widget is disabled
+        // when the last widget is disabled stop services
         context.stopService(new Intent(context, NextRaceCountdownService.class));
     }
 
@@ -76,6 +76,7 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
 
         switch (alarmStatus) {
             case ENABLED:
+                /* Sets an alarm which start a service which in turn updates the widgets */
                 alarmManager.setRepeating(
                         AlarmManager.ELAPSED_REALTIME,
                         SystemClock.elapsedRealtime(),
