@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onListFragmentInteraction(Race item) {
-        logItemSelectionEvent(item.round, item.raceName, "race");
+        logItemSelectionEvent(item.round.toString(), item.raceName, "race");
     }
 
     @Override

@@ -37,7 +37,7 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mRaces.get(position);
-        holder.mIdView.setText(mRaces.get(position).round);
+        holder.mIdView.setText(mRaces.get(position).round.toString());
         holder.mContentView.setText(mRaces.get(position).raceName);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

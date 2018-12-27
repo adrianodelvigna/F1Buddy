@@ -17,9 +17,9 @@ import udacity.androidnanodegree.adriano.capstone.utils.TimeLeft;
 public class Race {
 
     @Json(name = "season")
-    public String season;
+    public Integer season;
     @Json(name = "round")
-    public String round;
+    public Integer round;
     @Json(name = "url")
     public String url;
     @Json(name = "raceName")
