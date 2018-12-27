@@ -12,8 +12,6 @@ import android.widget.RemoteViews;
 
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
-import udacity.androidnanodegree.adriano.capstone.utils.TimeLeft;
-import udacity.androidnanodegree.adriano.capstone.utils.Utils;
 
 /**
  * Implementation of App Widget functionality.
@@ -21,13 +19,14 @@ import udacity.androidnanodegree.adriano.capstone.utils.Utils;
 public class NextRaceCountdownWidget extends AppWidgetProvider {
     private enum AlarmStatus { ENABLED, DISABLED }
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+    public void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
         RemoteViews remoteViews = new RemoteViews(
                 context.getPackageName(),
                 R.layout.next_race_countdown_widget);
-        TimeLeft timeLeft = Utils.getTimeLeftForRace(new Race());
-        remoteViews.setTextViewText(R.id.appwidget_text, timeLeft.toString());
+        remoteViews.setTextViewText(
+                R.id.appwidget_text,
+                getNextRace().getTimeLeftToRace().toString());
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
 
@@ -91,6 +90,13 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
                 alarmManager.cancel(pendingIntent);
                 break;
         }
+    }
+
+    private Race getNextRace() {
+        Race race = new Race();
+        race.setDate("2019-03-17");
+        race.setTime("05:10:00Z");
+        return race;
     }
 }
 

@@ -2,12 +2,22 @@ package udacity.androidnanodegree.adriano.capstone.utils;
 
 import android.support.annotation.NonNull;
 
+import org.threeten.bp.Duration;
+
 import java.util.Locale;
 
 public class TimeLeft {
     public long days;
     public long hours;
     public long minutes;
+
+    public TimeLeft() {}
+
+    public TimeLeft(Duration duration) {
+        days = duration.toDays();
+        hours = duration.minusDays(days).toHours();
+        minutes = duration.minusDays(days).minusHours(hours).toMinutes();
+    }
 
     @NonNull
     @Override

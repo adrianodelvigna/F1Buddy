@@ -6,6 +6,13 @@ import android.arch.persistence.room.Entity;
 
 import com.squareup.moshi.Json;
 
+import org.threeten.bp.Duration;
+import org.threeten.bp.Instant;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+
+import udacity.androidnanodegree.adriano.capstone.utils.TimeLeft;
+
 @Entity(primaryKeys = {"season", "round"})
 public class Race {
 
@@ -26,6 +33,8 @@ public class Race {
     private String date;
     @Json(name = "time")
     private String time;
+
+    private Long epochSeconds;
 
     public String getSeason() {
         return season;
@@ -83,4 +92,27 @@ public class Race {
         this.time = time;
     }
 
+    public Long getEpochSeconds() {
+        if (epochSeconds == null) {
+            epochSeconds = Instant.parse(date + "T" + time)
+                    .atZone(ZoneId.systemDefault())
+                    .toEpochSecond();
+        }
+        return epochSeconds;
+    }
+
+    public void setEpochSeconds(Long epochSeconds) {
+        this.epochSeconds = epochSeconds;
+    }
+
+    private Duration getDurationUntilRace() {
+        return Duration.between(
+                ZonedDateTime.now(),
+                ZonedDateTime.ofInstant(Instant.ofEpochSecond(getEpochSeconds()), ZoneId.systemDefault())
+        );
+    }
+
+    public TimeLeft getTimeLeftToRace() {
+        return new TimeLeft(getDurationUntilRace());
+    }
 }
