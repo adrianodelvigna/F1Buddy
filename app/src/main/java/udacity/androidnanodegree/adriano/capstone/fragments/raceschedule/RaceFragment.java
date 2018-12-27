@@ -92,7 +92,7 @@ public class RaceFragment extends Fragment {
 
     private void updateRecyclerViewStatus(RaceTable raceTable) {
         if (raceTable != null) {
-            recyclerView.swapAdapter(new RaceRecyclerViewAdapter(raceTable.getRaces(), mListener), true);
+            recyclerView.swapAdapter(new RaceRecyclerViewAdapter(raceTable.races, mListener), true);
         }
     }
 

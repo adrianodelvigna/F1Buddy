@@ -21,6 +21,6 @@ public class RaceScheduleService {
 
     public Observable<RaceTable> getRaceTableForSeason(Integer season) {
         return raceScheduleApi.getRaceScheduleForSeason(season.toString())
-                .map(raceSchedule -> raceSchedule.getMRData().getRaceTable());
+                .map(raceSchedule -> raceSchedule.mRData.raceTable);
     }
 }

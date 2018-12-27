@@ -7,34 +7,9 @@ import com.squareup.moshi.Json;
 public class StandingsList {
 
     @Json(name = "season")
-    private String season;
+    public String season;
     @Json(name = "round")
-    private String round;
+    public String round;
     @Json(name = "DriverStandings")
-    private List<DriverStanding> driverStandings = null;
-
-    public String getSeason() {
-        return season;
-    }
-
-    public void setSeason(String season) {
-        this.season = season;
-    }
-
-    public String getRound() {
-        return round;
-    }
-
-    public void setRound(String round) {
-        this.round = round;
-    }
-
-    public List<DriverStanding> getDriverStandings() {
-        return driverStandings;
-    }
-
-    public void setDriverStandings(List<DriverStanding> driverStandings) {
-        this.driverStandings = driverStandings;
-    }
-
+    public List<DriverStanding> driverStandings = null;
 }

@@ -17,80 +17,24 @@ import udacity.androidnanodegree.adriano.capstone.utils.TimeLeft;
 public class Race {
 
     @Json(name = "season")
-    private String season;
+    public String season;
     @Json(name = "round")
-    private String round;
+    public String round;
     @Json(name = "url")
-    private String url;
+    public String url;
     @Json(name = "raceName")
-    private String raceName;
+    public String raceName;
 
     @Json(name = "Circuit")
     @Embedded(prefix = "circuit_")
-    private Circuit circuit;
+    public Circuit circuit;
 
     @Json(name = "date")
-    private String date;
+    public String date;
     @Json(name = "time")
-    private String time;
+    public String time;
 
     private Long epochSeconds;
-
-    public String getSeason() {
-        return season;
-    }
-
-    public void setSeason(String season) {
-        this.season = season;
-    }
-
-    public String getRound() {
-        return round;
-    }
-
-    public void setRound(String round) {
-        this.round = round;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getRaceName() {
-        return raceName;
-    }
-
-    public void setRaceName(String raceName) {
-        this.raceName = raceName;
-    }
-
-    public Circuit getCircuit() {
-        return circuit;
-    }
-
-    public void setCircuit(Circuit circuit) {
-        this.circuit = circuit;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public Long getEpochSeconds() {
         if (epochSeconds == null) {

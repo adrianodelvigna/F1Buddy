@@ -93,7 +93,7 @@ public class DriverFragment extends Fragment {
     private void updateRecyclerViewStatus(StandingsTable standingsTable) {
         if (standingsTable != null) {
             recyclerView.swapAdapter(
-                    new DriverRecyclerViewAdapter(standingsTable.getStandingsLists().get(0).getDriverStandings(),
+                    new DriverRecyclerViewAdapter(standingsTable.standingsLists.get(0).driverStandings,
                             mListener),
                     true);
         }

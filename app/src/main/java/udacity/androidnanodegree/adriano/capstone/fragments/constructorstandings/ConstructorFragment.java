@@ -93,7 +93,7 @@ public class ConstructorFragment extends Fragment {
     private void updateRecyclerViewStatus(StandingsTable standingsTable) {
         if (standingsTable != null) {
             recyclerView.swapAdapter(
-                    new ConstructorRecyclerViewAdapter(standingsTable.getStandingsLists().get(0).getConstructorStandings(),
+                    new ConstructorRecyclerViewAdapter(standingsTable.standingsLists.get(0).constructorStandings,
                             mListener),
                     true);
         }

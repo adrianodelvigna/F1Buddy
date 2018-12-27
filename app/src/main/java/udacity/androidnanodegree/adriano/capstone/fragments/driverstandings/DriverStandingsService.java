@@ -22,9 +22,7 @@ public class DriverStandingsService {
     public Observable<StandingsTable> getDriverStandingsTableForSeason(Integer season) {
         return driverStandingsApi
                 .getDriverStandingsForSeason(season.toString())
-                .map(standingsList -> standingsList
-                        .getMRData()
-                        .getStandingsTable());
+                .map(standingsList -> standingsList.mRData.standingsTable);
     }
 
 }

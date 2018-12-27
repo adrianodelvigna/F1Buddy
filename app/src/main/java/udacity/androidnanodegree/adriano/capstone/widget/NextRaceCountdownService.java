@@ -55,8 +55,8 @@ public class NextRaceCountdownService extends Service {
 
     private Race getNextRace() {
         Race race = new Race();
-        race.setDate("2019-03-17");
-        race.setTime("05:10:00Z");
+        race.date = "2019-03-17";
+        race.time ="05:10:00Z";
         return race;
     }
 }

@@ -80,17 +80,17 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onListFragmentInteraction(Race item) {
-        logItemSelectionEvent(item.getRound(), item.getRaceName(), "race");
+        logItemSelectionEvent(item.round, item.raceName, "race");
     }
 
     @Override
     public void onListFragmentInteraction(DriverStanding item) {
-        logItemSelectionEvent(item.getDriver().getDriverId(), item.getDriver().getCode(), "driver");
+        logItemSelectionEvent(item.driver.driverId, item.driver.code, "driver");
     }
 
     @Override
     public void onListFragmentInteraction(ConstructorStanding item) {
-        logItemSelectionEvent(item.getConstructor().getConstructorId(), item.getConstructor().getName(), "constructor");
+        logItemSelectionEvent(item.constructor.constructorId, item.constructor.name, "constructor");
     }
 
     private void displayAboutActivity() {
