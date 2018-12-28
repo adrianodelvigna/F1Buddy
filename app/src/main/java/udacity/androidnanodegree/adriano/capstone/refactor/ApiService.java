@@ -10,13 +10,13 @@ import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.
 public interface ApiService {
     //http://ergast.com/api/f1/2018.json
     @GET("f1/{season}.json")
-    Call<RaceSchedule> getRaceScheduleForSeason(@Path("season") String season);
+    Call<RaceSchedule> getRaceScheduleForSeason(@Path("season") int season);
 
     //http://ergast.com/api/f1/2008/driverStandings.json
     @GET("f1/{season}/driverStandings.json")
-    Call<DriverStandings> getDriverStandingsForSeason(@Path("season") String season);
+    Call<DriverStandings> getDriverStandingsForSeason(@Path("season") int season);
 
     //http://ergast.com/api/f1/2008/constructorStandings.json
     @GET("f1/{season}/constructorStandings.json")
-    Call<ConstructorStandings> getConstructorStandingsForSeason(@Path("season") String season);
+    Call<ConstructorStandings> getConstructorStandingsForSeason(@Path("season") int season);
 }

@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor;
+package udacity.androidnanodegree.adriano.capstone.refactor.repositories;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
@@ -10,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import java.util.Objects;
+
+import udacity.androidnanodegree.adriano.capstone.refactor.ApiResponse;
+import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
 
 public abstract class NetworkBoundResource<ResultType, RequestType> {
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
