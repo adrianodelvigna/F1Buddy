@@ -12,9 +12,9 @@ import javax.inject.Singleton;
 
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceSchedule;
-import udacity.androidnanodegree.adriano.capstone.refactor.ApiResponse;
-import udacity.androidnanodegree.adriano.capstone.refactor.ApiService;
-import udacity.androidnanodegree.adriano.capstone.refactor.NetworkAsyncTask;
+import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiResponse;
+import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiService;
+import udacity.androidnanodegree.adriano.capstone.refactor.webapi.NetworkAsyncTask;
 import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
 import udacity.androidnanodegree.adriano.capstone.refactor.database.SeasonScheduleDao;
 

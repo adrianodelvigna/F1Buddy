@@ -11,7 +11,7 @@ import android.support.annotation.WorkerThread;
 
 import java.util.Objects;
 
-import udacity.androidnanodegree.adriano.capstone.refactor.ApiResponse;
+import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiResponse;
 import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
 
 public abstract class NetworkBoundResource<ResultType, RequestType> {

@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor;
+package udacity.androidnanodegree.adriano.capstone.refactor.webapi;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -9,6 +9,7 @@ import android.support.annotation.WorkerThread;
 import java.io.IOException;
 
 import retrofit2.Call;
+import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
 
 public class NetworkAsyncTask<T>
         extends AsyncTask<Call<T>, Void, ApiResponse<T>> {

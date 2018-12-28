@@ -13,8 +13,12 @@ import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.ConstructorFragment;
 import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models.ConstructorStanding;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.DriverFragment;
@@ -23,6 +27,7 @@ import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.RaceFra
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 
 public class MainActivity extends AppCompatActivity implements
+        HasSupportFragmentInjector,
         RaceFragment.OnListFragmentInteractionListener,
         DriverFragment.OnListFragmentInteractionListener,
         ConstructorFragment.OnListFragmentInteractionListener {
@@ -35,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements
     private MainActivityPageAdapter mainActivityPageAdapter;
 
     private FirebaseAnalytics firebaseAnalytics;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+    @Inject
+    MainPageController mainPageController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    @Override
+    public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 
     private static class MainActivityPageAdapter extends FragmentPagerAdapter {

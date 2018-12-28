@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor;
+package udacity.androidnanodegree.adriano.capstone.refactor.webapi;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
