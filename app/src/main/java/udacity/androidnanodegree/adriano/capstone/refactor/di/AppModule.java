@@ -3,6 +3,8 @@ package udacity.androidnanodegree.adriano.capstone.refactor.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -49,5 +51,11 @@ public class AppModule {
     @Singleton
     ConstructorStandingsDao providesConstructorStandingsDao(AppDatabase appDatabase) {
         return appDatabase.constructorStandingsDao();
+    }
+
+    @Provides
+    @Singleton
+    FirebaseAnalytics providesFirebaseAnalytics(Application application) {
+        return FirebaseAnalytics.getInstance(application);
     }
 }

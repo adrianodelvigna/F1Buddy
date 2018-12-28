@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity implements
 
     private MainActivityPageAdapter mainActivityPageAdapter;
 
-    private FirebaseAnalytics firebaseAnalytics;
-
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
     @Inject
     MainPageController mainPageController;
+    @Inject
+    FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onPageScrollStateChanged(int i) {}
         });
-
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     @Override
