@@ -1,11 +1,11 @@
-package udacity.androidnanodegree.adriano.capstone;
+package udacity.androidnanodegree.adriano.capstone.refactor;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import static udacity.androidnanodegree.adriano.capstone.Status.ERROR;
-import static udacity.androidnanodegree.adriano.capstone.Status.LOADING;
-import static udacity.androidnanodegree.adriano.capstone.Status.SUCCESS;
+import static udacity.androidnanodegree.adriano.capstone.refactor.Status.ERROR;
+import static udacity.androidnanodegree.adriano.capstone.refactor.Status.LOADING;
+import static udacity.androidnanodegree.adriano.capstone.refactor.Status.SUCCESS;
 
 public class Resource<T> {
 

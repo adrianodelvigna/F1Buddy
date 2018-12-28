@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone;
+package udacity.androidnanodegree.adriano.capstone.refactor;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone;
+package udacity.androidnanodegree.adriano.capstone.refactor;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
-import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 public abstract class NetworkBoundResource<ResultType, RequestType> {
