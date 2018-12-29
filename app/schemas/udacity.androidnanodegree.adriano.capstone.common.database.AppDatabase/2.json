@@ -1,0 +1,229 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "9d829eb19b160e1dc85255eb25e3eb54",
+    "entities": [
+      {
+        "tableName": "Race",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`season` INTEGER NOT NULL, `round` INTEGER NOT NULL, `url` TEXT, `raceName` TEXT, `date` TEXT, `time` TEXT, `epochSeconds` INTEGER, `circuit_circuitId` TEXT, `circuit_url` TEXT, `circuit_circuitName` TEXT, `circuit_lat` TEXT, `circuit__long` TEXT, `circuit_locality` TEXT, `circuit_country` TEXT, PRIMARY KEY(`season`, `round`))",
+        "fields": [
+          {
+            "fieldPath": "season",
+            "columnName": "season",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "round",
+            "columnName": "round",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "raceName",
+            "columnName": "raceName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "epochSeconds",
+            "columnName": "epochSeconds",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "circuit.circuitId",
+            "columnName": "circuit_circuitId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "circuit.url",
+            "columnName": "circuit_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "circuit.circuitName",
+            "columnName": "circuit_circuitName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "circuit.location.lat",
+            "columnName": "circuit_lat",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "circuit.location._long",
+            "columnName": "circuit__long",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "circuit.location.locality",
+            "columnName": "circuit_locality",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "circuit.location.country",
+            "columnName": "circuit_country",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "season",
+            "round"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "DriverStanding",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`season` INTEGER NOT NULL, `position` INTEGER NOT NULL, `positionText` TEXT, `points` INTEGER NOT NULL, `wins` INTEGER NOT NULL, `driver_driverId` TEXT, `driver_permanentNumber` TEXT, `driver_code` TEXT, `driver_url` TEXT, `driver_givenName` TEXT, `driver_familyName` TEXT, `driver_dateOfBirth` TEXT, `driver_nationality` TEXT, `constructor_constructorId` TEXT, `constructor_url` TEXT, `constructor_name` TEXT, `constructor_nationality` TEXT, PRIMARY KEY(`season`, `position`))",
+        "fields": [
+          {
+            "fieldPath": "season",
+            "columnName": "season",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "positionText",
+            "columnName": "positionText",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "points",
+            "columnName": "points",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wins",
+            "columnName": "wins",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "driver.driverId",
+            "columnName": "driver_driverId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "driver.permanentNumber",
+            "columnName": "driver_permanentNumber",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "driver.code",
+            "columnName": "driver_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "driver.url",
+            "columnName": "driver_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "driver.givenName",
+            "columnName": "driver_givenName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "driver.familyName",
+            "columnName": "driver_familyName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "driver.dateOfBirth",
+            "columnName": "driver_dateOfBirth",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "driver.nationality",
+            "columnName": "driver_nationality",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "constructor.constructorId",
+            "columnName": "constructor_constructorId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "constructor.url",
+            "columnName": "constructor_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "constructor.name",
+            "columnName": "constructor_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "constructor.nationality",
+            "columnName": "constructor_nationality",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "season",
+            "position"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9d829eb19b160e1dc85255eb25e3eb54\")"
+    ]
+  }
+}
