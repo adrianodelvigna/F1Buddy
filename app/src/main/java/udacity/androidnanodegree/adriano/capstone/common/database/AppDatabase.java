@@ -6,10 +6,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.migration.Migration;
 import android.support.annotation.NonNull;
 
+import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models.ConstructorStanding;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 
-@Database(entities = {Race.class, DriverStanding.class}, version = 2)
+@Database(entities = {Race.class, DriverStanding.class, ConstructorStanding.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     abstract public SeasonScheduleDao seasonScheduleDao();
     abstract public DriverStandingsDao driverStandingsDao();
@@ -32,6 +33,23 @@ public abstract class AppDatabase extends RoomDatabase {
                     "`driver_familyName` TEXT, " +
                     "`driver_dateOfBirth` TEXT, " +
                     "`driver_nationality` TEXT, " +
+                    "`constructor_constructorId` TEXT, " +
+                    "`constructor_url` TEXT, " +
+                    "`constructor_name` TEXT, " +
+                    "`constructor_nationality` TEXT, " +
+                    "PRIMARY KEY(`season`, `position`))");
+        }
+    };
+
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS constructorstanding " +
+                    "(`season` INTEGER NOT NULL, " +
+                    "`position` INTEGER NOT NULL, " +
+                    "`positionText` TEXT, " +
+                    "`points` INTEGER, " +
+                    "`wins` INTEGER, " +
                     "`constructor_constructorId` TEXT, " +
                     "`constructor_url` TEXT, " +
                     "`constructor_name` TEXT, " +

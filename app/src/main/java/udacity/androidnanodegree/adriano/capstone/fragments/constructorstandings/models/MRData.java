@@ -12,11 +12,11 @@ public class MRData {
     @Json(name = "url")
     public String url;
     @Json(name = "limit")
-    public String limit;
+    public Integer limit;
     @Json(name = "offset")
-    public String offset;
+    public Integer offset;
     @Json(name = "total")
-    public String total;
+    public Integer total;
     @Json(name = "StandingsTable")
     public StandingsTable standingsTable;
 }
