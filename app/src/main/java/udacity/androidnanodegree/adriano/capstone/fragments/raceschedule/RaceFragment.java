@@ -22,10 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
-import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
-import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
 import udacity.androidnanodegree.adriano.capstone.common.Resource;
 import udacity.androidnanodegree.adriano.capstone.common.di.Injectable;
+import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
+import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
 
 import static udacity.androidnanodegree.adriano.capstone.common.Status.LOADING;
 
@@ -36,8 +36,6 @@ import static udacity.androidnanodegree.adriano.capstone.common.Status.LOADING;
  * interface.
  */
 public class RaceFragment extends Fragment implements Injectable {
-
-    private static final String TAG = "RaceFragment";
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -59,7 +57,6 @@ public class RaceFragment extends Fragment implements Injectable {
      * fragment (e.g. upon screen orientation changes).
      */
     public RaceFragment() {
-
     }
 
     // TODO: Customize parameter initialization

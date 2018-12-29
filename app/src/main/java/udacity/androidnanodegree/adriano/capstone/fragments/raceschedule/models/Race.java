@@ -18,11 +18,14 @@ public class Race {
     @NonNull
     @Json(name = "season")
     public Integer season;
+
     @NonNull
     @Json(name = "round")
     public Integer round;
+
     @Json(name = "url")
     public String url;
+
     @Json(name = "raceName")
     public String raceName;
 
@@ -32,6 +35,7 @@ public class Race {
 
     @Json(name = "date")
     public String date;
+
     @Json(name = "time")
     public String time;
 

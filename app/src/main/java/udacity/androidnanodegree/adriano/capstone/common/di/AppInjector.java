@@ -62,6 +62,7 @@ public class AppInjector {
             AndroidInjection.inject(activity);
         }
         if (activity instanceof FragmentActivity) {
+            //TODO: experiment moving this to onAttach of a fragment later
             ((FragmentActivity) activity).getSupportFragmentManager()
                     .registerFragmentLifecycleCallbacks(
                             new FragmentManager.FragmentLifecycleCallbacks() {
