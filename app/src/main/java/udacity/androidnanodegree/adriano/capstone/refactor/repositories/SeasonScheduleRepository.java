@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,11 +11,11 @@ import javax.inject.Singleton;
 
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceSchedule;
+import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
+import udacity.androidnanodegree.adriano.capstone.refactor.database.SeasonScheduleDao;
 import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiResponse;
 import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiService;
 import udacity.androidnanodegree.adriano.capstone.refactor.webapi.NetworkAsyncTask;
-import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
-import udacity.androidnanodegree.adriano.capstone.refactor.database.SeasonScheduleDao;
 
 @Singleton
 public class SeasonScheduleRepository {
@@ -34,25 +33,25 @@ public class SeasonScheduleRepository {
 
             @Override
             protected void saveCallResult(@NonNull RaceSchedule item) {
-
+                seasonScheduleDao.insertAll(item.mRData.raceTable.races);
             }
 
             @Override
             protected boolean shouldFetch(@Nullable List<Race> data) {
-                return data == null;
+                return data == null || data.isEmpty();
             }
 
             @NonNull
             @Override
             protected LiveData<List<Race>> loadFromDb() {
-                return null;
+                return seasonScheduleDao.getAllRacesFromSeason(season);
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<RaceSchedule>> createCall() {
                 NetworkAsyncTask<RaceSchedule> networkAsyncTask = new NetworkAsyncTask<>();
-                networkAsyncTask.execute(apiService.getRaceScheduleForSeason(2018));
+                networkAsyncTask.execute(apiService.getRaceScheduleForSeason(season));
                 return networkAsyncTask.getApiResponseLiveData();
             }
         }.asLiveData();

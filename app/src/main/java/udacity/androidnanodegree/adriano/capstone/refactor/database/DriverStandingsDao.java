@@ -1,4 +1,7 @@
 package udacity.androidnanodegree.adriano.capstone.refactor.database;
 
-public class DriverStandingsDao {
+import android.arch.persistence.room.Dao;
+
+@Dao
+public interface DriverStandingsDao {
 }

@@ -17,7 +17,7 @@ import udacity.androidnanodegree.adriano.capstone.refactor.database.DriverStandi
 import udacity.androidnanodegree.adriano.capstone.refactor.database.SeasonScheduleDao;
 import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiService;
 
-@Module
+@Module(includes = ViewModelModule.class)
 public class AppModule {
     @Provides
     @Singleton

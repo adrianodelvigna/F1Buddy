@@ -3,6 +3,7 @@ package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models
 
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.support.annotation.NonNull;
 
 import com.squareup.moshi.Json;
 
@@ -16,8 +17,10 @@ import udacity.androidnanodegree.adriano.capstone.utils.TimeLeft;
 @Entity(primaryKeys = {"season", "round"})
 public class Race {
 
+    @NonNull
     @Json(name = "season")
     public Integer season;
+    @NonNull
     @Json(name = "round")
     public Integer round;
     @Json(name = "url")

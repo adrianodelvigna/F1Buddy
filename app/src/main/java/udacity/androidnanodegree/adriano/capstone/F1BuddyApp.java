@@ -17,9 +17,9 @@ public final class F1BuddyApp extends Application implements HasActivityInjector
 
     @Override
     public void onCreate() {
-        super.onCreate();
         AppInjector.init(this);
         AndroidThreeTen.init(this);
+        super.onCreate();
     }
 
     @Override
