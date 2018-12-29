@@ -37,8 +37,8 @@ public class ConstructorRecyclerViewAdapter extends RecyclerView.Adapter<Constru
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = constructorStandings.get(position);
-        holder.mIdView.setText(constructorStandings.get(position).getPositionText());
-        holder.mContentView.setText(constructorStandings.get(position).getConstructor().getName());
+        holder.mIdView.setText(constructorStandings.get(position).positionText);
+        holder.mContentView.setText(constructorStandings.get(position).constructor.name);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

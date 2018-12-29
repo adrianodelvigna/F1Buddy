@@ -1,8 +1,10 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,13 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
+import udacity.androidnanodegree.adriano.capstone.common.Resource;
+import udacity.androidnanodegree.adriano.capstone.common.di.Injectable;
 import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models.ConstructorStanding;
-import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models.StandingsTable;
 import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.viewmodels.ConstructorStandingsViewModel;
+
+import static udacity.androidnanodegree.adriano.capstone.common.Status.LOADING;
 
 /**
  * A fragment representing a list of Items.
@@ -26,7 +35,7 @@ import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ConstructorFragment extends Fragment {
+public class ConstructorFragment extends Fragment implements Injectable {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -37,6 +46,9 @@ public class ConstructorFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.loading) LinearLayout loading;
     @BindView(R.id.list) RecyclerView recyclerView;
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
 
     private ConstructorStandingsViewModel constructorStandingsViewModel;
 
@@ -64,10 +76,17 @@ public class ConstructorFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+    }
 
-        constructorStandingsViewModel = ViewModelProviders.of(getActivity()).get(ConstructorStandingsViewModel.class);
-        constructorStandingsViewModel.getIsLoadingLiveData().observe(this, this::updateLoadingStatus);
-        constructorStandingsViewModel.getConstructorStandingsTableLiveData().observe(this, this::updateRecyclerViewStatus);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        constructorStandingsViewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(ConstructorStandingsViewModel.class);
+        constructorStandingsViewModel
+                .loadConstructorStandingsForSeason(2018)
+                .observe(this, this::constructorStandingsObserver);
     }
 
     @Override
@@ -84,26 +103,21 @@ public class ConstructorFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
 
-        updateLoadingStatus(constructorStandingsViewModel.getIsLoadingLiveData().getValue());
-        updateRecyclerViewStatus(constructorStandingsViewModel.getConstructorStandingsTableLiveData().getValue());
-
         return view;
     }
 
-    private void updateRecyclerViewStatus(StandingsTable standingsTable) {
-        if (standingsTable != null) {
-            recyclerView.swapAdapter(
-                    new ConstructorRecyclerViewAdapter(standingsTable.getStandingsLists().get(0).getConstructorStandings(),
-                            mListener),
-                    true);
-        }
-    }
+    private void constructorStandingsObserver(Resource<List<ConstructorStanding>> listResource) {
+        loading.setVisibility(listResource.status == LOADING ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(listResource.status == LOADING ? View.GONE : View.VISIBLE);
 
-    private void updateLoadingStatus(Boolean isLoading) {
-        if (isLoading != null) {
-            loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-            recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        switch (listResource.status) {
+            case SUCCESS:
+                recyclerView.swapAdapter(new ConstructorRecyclerViewAdapter(listResource.data, mListener), true);
+                break;
+            case ERROR:
+                break;
         }
+
     }
 
     @Override

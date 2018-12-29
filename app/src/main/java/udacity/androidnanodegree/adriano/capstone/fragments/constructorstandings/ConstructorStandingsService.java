@@ -22,8 +22,6 @@ public class ConstructorStandingsService {
     public Observable<StandingsTable> getConstructorStandingsTableForSeason(Integer season) {
         return constructorStandingsApi
                 .getConstructorStandingsForSeason(season.toString())
-                .map(standingsList -> standingsList
-                        .getMRData()
-                        .getStandingsTable());
+                .map(standingsList -> standingsList.mRData.standingsTable);
     }
 }

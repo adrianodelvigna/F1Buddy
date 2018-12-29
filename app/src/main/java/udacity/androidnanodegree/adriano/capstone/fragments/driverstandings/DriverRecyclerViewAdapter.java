@@ -37,8 +37,8 @@ public class DriverRecyclerViewAdapter extends RecyclerView.Adapter<DriverRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = driverStandings.get(position);
-        holder.mIdView.setText(driverStandings.get(position).getPositionText());
-        holder.mContentView.setText(driverStandings.get(position).getDriver().getDriverId());
+        holder.mIdView.setText(driverStandings.get(position).positionText);
+        holder.mContentView.setText(driverStandings.get(position).driver.driverId);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

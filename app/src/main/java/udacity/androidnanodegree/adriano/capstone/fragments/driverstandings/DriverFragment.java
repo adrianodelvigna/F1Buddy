@@ -1,8 +1,10 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.driverstandings;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,13 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
+import udacity.androidnanodegree.adriano.capstone.common.Resource;
+import udacity.androidnanodegree.adriano.capstone.common.di.Injectable;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
-import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.StandingsTable;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.viewmodels.DriverStandingsViewModel;
+
+import static udacity.androidnanodegree.adriano.capstone.common.Status.LOADING;
 
 /**
  * A fragment representing a list of Items.
@@ -26,7 +35,7 @@ import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.view
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class DriverFragment extends Fragment {
+public class DriverFragment extends Fragment implements Injectable {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -37,6 +46,9 @@ public class DriverFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.loading) LinearLayout loading;
     @BindView(R.id.list) RecyclerView recyclerView;
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
 
     private DriverStandingsViewModel driverStandingsViewModel;
 
@@ -64,10 +76,18 @@ public class DriverFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+    }
 
-        driverStandingsViewModel = ViewModelProviders.of(getActivity()).get(DriverStandingsViewModel.class);
-        driverStandingsViewModel.getIsLoadingLiveData().observe(this, this::updateLoadingStatus);
-        driverStandingsViewModel.getDriverStandingsTableLiveData().observe(this, this::updateRecyclerViewStatus);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        driverStandingsViewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(DriverStandingsViewModel.class);
+        driverStandingsViewModel
+                .loadDriverStandingsForSeason(2018)
+                .observe(this, this::DriverStandingsObserver);
     }
 
     @Override
@@ -84,28 +104,22 @@ public class DriverFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
 
-        updateLoadingStatus(driverStandingsViewModel.getIsLoadingLiveData().getValue());
-        updateRecyclerViewStatus(driverStandingsViewModel.getDriverStandingsTableLiveData().getValue());
-
         return view;
     }
 
-    private void updateRecyclerViewStatus(StandingsTable standingsTable) {
-        if (standingsTable != null) {
-            recyclerView.swapAdapter(
-                    new DriverRecyclerViewAdapter(standingsTable.getStandingsLists().get(0).getDriverStandings(),
-                            mListener),
-                    true);
-        }
-    }
+    private void DriverStandingsObserver(Resource<List<DriverStanding>> listResource) {
+        loading.setVisibility(listResource.status == LOADING ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(listResource.status == LOADING ? View.GONE : View.VISIBLE);
 
-    private void updateLoadingStatus(Boolean isLoading) {
-        if (isLoading != null) {
-            loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-            recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        switch (listResource.status) {
+            case SUCCESS:
+                recyclerView.swapAdapter(new DriverRecyclerViewAdapter(listResource.data, mListener), true);
+                break;
+            case ERROR:
+                break;
         }
-    }
 
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -141,7 +155,6 @@ public class DriverFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(DriverStanding item);
     }
 }

@@ -1,79 +1,67 @@
 
 package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models;
 
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.support.annotation.NonNull;
+
 import com.squareup.moshi.Json;
 
+import org.threeten.bp.Duration;
+import org.threeten.bp.Instant;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+
+@Entity(primaryKeys = {"season", "round"})
 public class Race {
 
+    @NonNull
     @Json(name = "season")
-    private String season;
+    public Integer season;
+
+    @NonNull
     @Json(name = "round")
-    private String round;
+    public Integer round;
+
     @Json(name = "url")
-    private String url;
+    public String url;
+
     @Json(name = "raceName")
-    private String raceName;
+    public String raceName;
+
     @Json(name = "Circuit")
-    private Circuit circuit;
+    @Embedded(prefix = "circuit_")
+    public Circuit circuit;
+
     @Json(name = "date")
-    private String date;
+    public String date;
+
     @Json(name = "time")
-    private String time;
+    public String time;
 
-    public String getSeason() {
-        return season;
+    private Long epochSeconds;
+
+    public Long getEpochSeconds() {
+        if (epochSeconds == null) {
+            epochSeconds = Instant.parse(date + "T" + time)
+                    .atZone(ZoneId.systemDefault())
+                    .toEpochSecond();
+        }
+        return epochSeconds;
     }
 
-    public void setSeason(String season) {
-        this.season = season;
+    public void setEpochSeconds(Long epochSeconds) {
+        this.epochSeconds = epochSeconds;
     }
 
-    public String getRound() {
-        return round;
+    private Duration getDurationUntilRace() {
+        return Duration.between(
+                ZonedDateTime.now(),
+                ZonedDateTime.ofInstant(Instant.ofEpochSecond(getEpochSeconds()), ZoneId.systemDefault())
+        );
     }
 
-    public void setRound(String round) {
-        this.round = round;
+    public TimeLeft getTimeLeftToRace() {
+        return new TimeLeft(getDurationUntilRace());
     }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getRaceName() {
-        return raceName;
-    }
-
-    public void setRaceName(String raceName) {
-        this.raceName = raceName;
-    }
-
-    public Circuit getCircuit() {
-        return circuit;
-    }
-
-    public void setCircuit(Circuit circuit) {
-        this.circuit = circuit;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
 }
