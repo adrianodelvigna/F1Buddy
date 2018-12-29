@@ -24,10 +24,10 @@ import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
-import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
-import udacity.androidnanodegree.adriano.capstone.refactor.di.Injectable;
+import udacity.androidnanodegree.adriano.capstone.common.Resource;
+import udacity.androidnanodegree.adriano.capstone.common.di.Injectable;
 
-import static udacity.androidnanodegree.adriano.capstone.refactor.Status.LOADING;
+import static udacity.androidnanodegree.adriano.capstone.common.Status.LOADING;
 
 /**
  * A fragment representing a list of Items.

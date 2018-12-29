@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor.viewmodel;
+package udacity.androidnanodegree.adriano.capstone.common.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

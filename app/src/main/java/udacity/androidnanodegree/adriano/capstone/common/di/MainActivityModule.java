@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor.di;
+package udacity.androidnanodegree.adriano.capstone.common.di;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

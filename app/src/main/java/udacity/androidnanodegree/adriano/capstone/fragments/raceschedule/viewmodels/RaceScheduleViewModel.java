@@ -8,8 +8,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
-import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
-import udacity.androidnanodegree.adriano.capstone.refactor.repositories.SeasonScheduleRepository;
+import udacity.androidnanodegree.adriano.capstone.common.Resource;
+import udacity.androidnanodegree.adriano.capstone.common.repositories.SeasonScheduleRepository;
 
 public class RaceScheduleViewModel extends ViewModel {
     SeasonScheduleRepository seasonScheduleRepository;

@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor.di;
+package udacity.androidnanodegree.adriano.capstone.common.di;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
@@ -9,7 +9,7 @@ import dagger.multibindings.IntoMap;
 import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.viewmodels.ConstructorStandingsViewModel;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.viewmodels.DriverStandingsViewModel;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
-import udacity.androidnanodegree.adriano.capstone.refactor.viewmodel.AppViewModelFactory;
+import udacity.androidnanodegree.adriano.capstone.common.viewmodel.AppViewModelFactory;
 
 @Module
 public abstract class ViewModelModule {

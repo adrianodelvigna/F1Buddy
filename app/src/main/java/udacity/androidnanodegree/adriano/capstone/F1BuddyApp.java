@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import udacity.androidnanodegree.adriano.capstone.refactor.di.AppInjector;
+import udacity.androidnanodegree.adriano.capstone.common.di.AppInjector;
 
 public final class F1BuddyApp extends Application implements HasActivityInjector {
     @Inject

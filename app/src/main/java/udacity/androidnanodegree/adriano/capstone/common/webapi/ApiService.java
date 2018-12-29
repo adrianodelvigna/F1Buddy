@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor.webapi;
+package udacity.androidnanodegree.adriano.capstone.common.webapi;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

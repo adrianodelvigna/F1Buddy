@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor.di;
+package udacity.androidnanodegree.adriano.capstone.common.di;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
@@ -11,11 +11,11 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
-import udacity.androidnanodegree.adriano.capstone.refactor.database.AppDatabase;
-import udacity.androidnanodegree.adriano.capstone.refactor.database.ConstructorStandingsDao;
-import udacity.androidnanodegree.adriano.capstone.refactor.database.DriverStandingsDao;
-import udacity.androidnanodegree.adriano.capstone.refactor.database.SeasonScheduleDao;
-import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiService;
+import udacity.androidnanodegree.adriano.capstone.common.database.AppDatabase;
+import udacity.androidnanodegree.adriano.capstone.common.database.ConstructorStandingsDao;
+import udacity.androidnanodegree.adriano.capstone.common.database.DriverStandingsDao;
+import udacity.androidnanodegree.adriano.capstone.common.database.SeasonScheduleDao;
+import udacity.androidnanodegree.adriano.capstone.common.webapi.ApiService;
 
 @Module(includes = ViewModelModule.class)
 public class AppModule {

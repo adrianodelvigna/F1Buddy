@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor.repositories;
+package udacity.androidnanodegree.adriano.capstone.common.repositories;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
@@ -11,11 +11,11 @@ import javax.inject.Singleton;
 
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceSchedule;
-import udacity.androidnanodegree.adriano.capstone.refactor.Resource;
-import udacity.androidnanodegree.adriano.capstone.refactor.database.SeasonScheduleDao;
-import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiResponse;
-import udacity.androidnanodegree.adriano.capstone.refactor.webapi.ApiService;
-import udacity.androidnanodegree.adriano.capstone.refactor.webapi.NetworkAsyncTask;
+import udacity.androidnanodegree.adriano.capstone.common.Resource;
+import udacity.androidnanodegree.adriano.capstone.common.database.SeasonScheduleDao;
+import udacity.androidnanodegree.adriano.capstone.common.webapi.ApiResponse;
+import udacity.androidnanodegree.adriano.capstone.common.webapi.ApiService;
+import udacity.androidnanodegree.adriano.capstone.common.webapi.NetworkAsyncTask;
 
 @Singleton
 public class SeasonScheduleRepository {

@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.refactor.database;
+package udacity.androidnanodegree.adriano.capstone.common.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;

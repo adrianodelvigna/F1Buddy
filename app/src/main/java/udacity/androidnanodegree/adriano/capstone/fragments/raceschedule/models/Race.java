@@ -12,8 +12,6 @@ import org.threeten.bp.Instant;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
-import udacity.androidnanodegree.adriano.capstone.utils.TimeLeft;
-
 @Entity(primaryKeys = {"season", "round"})
 public class Race {
 

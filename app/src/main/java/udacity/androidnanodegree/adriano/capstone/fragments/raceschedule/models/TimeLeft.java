@@ -1,4 +1,4 @@
-package udacity.androidnanodegree.adriano.capstone.utils;
+package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models;
 
 import android.support.annotation.NonNull;
 
