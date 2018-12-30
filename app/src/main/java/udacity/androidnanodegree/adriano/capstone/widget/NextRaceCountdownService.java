@@ -11,8 +11,6 @@ import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 
 public class NextRaceCountdownService extends Service {
-    private static final String TAG = "NextRaceCountdownServic";
-
     public static final String COUNTDOWN_TICK = "udacity.androidnanodegree.adriano.capstone.widget.NextRaceCountdownService.COUNTDOWN_TICK";
     public static final long UPDATE_RATE = 60 * 1000; // one minute: 60 * 1000 milliseconds
 
@@ -53,6 +51,7 @@ public class NextRaceCountdownService extends Service {
         stopSelf(startId);
     }
 
+    //TODO: implement this!!!
     private Race getNextRace() {
         Race race = new Race();
         race.date = "2019-03-17";

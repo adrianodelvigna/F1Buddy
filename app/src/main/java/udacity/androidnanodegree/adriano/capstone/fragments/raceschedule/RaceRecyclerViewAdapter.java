@@ -72,6 +72,7 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
             }
         });
 
+        // TODO: implement this!
         holder.reminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

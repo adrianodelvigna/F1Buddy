@@ -93,6 +93,7 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
         }
     }
 
+    //TODO: implement this!!!
     private Race getNextRace() {
         Race race = new Race();
         race.date = "2019-03-17";
