@@ -18,14 +18,16 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".fragments.raceschedule.RaceFragment"
-        tools:listitem="@layout/fragment_race" />
+        tools:listitem="@layout/fragment_race"
+        android:descendantFocusability="afterDescendants"/>
 
     <LinearLayout
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:focusable="false">
 
         <ProgressBar
             android:layout_width="wrap_content"

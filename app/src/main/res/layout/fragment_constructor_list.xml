@@ -18,7 +18,8 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".fragments.constructorstandings.ConstructorFragment"
-        tools:listitem="@layout/fragment_constructor" />
+        tools:listitem="@layout/fragment_standing"
+        android:descendantFocusability="afterDescendants"/>
 
     <LinearLayout
         android:id="@+id/loading"
