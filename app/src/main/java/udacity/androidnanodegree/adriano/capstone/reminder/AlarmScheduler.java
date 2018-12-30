@@ -80,6 +80,10 @@ public class AlarmScheduler {
         intent.setData(intentData);
 
         intent.putExtra(context.getString(R.string.EXTRA_GRANDPRIX_NAME), race.raceName);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+        return PendingIntent.getBroadcast(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }
