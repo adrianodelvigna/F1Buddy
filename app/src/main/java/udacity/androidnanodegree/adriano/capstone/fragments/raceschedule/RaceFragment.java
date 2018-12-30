@@ -112,7 +112,12 @@ public class RaceFragment extends Fragment implements Injectable {
 
         switch (listResource.status) {
             case SUCCESS:
-                recyclerView.swapAdapter(new RaceRecyclerViewAdapter(listResource.data, mListener), true);
+                recyclerView.swapAdapter(
+                        new RaceRecyclerViewAdapter(
+                                listResource.data,
+                                raceScheduleViewModel,
+                                mListener),
+                        true);
                 break;
             case ERROR:
                 break;

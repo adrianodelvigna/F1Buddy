@@ -22,4 +22,8 @@ public class RaceScheduleViewModel extends ViewModel {
     public LiveData<Resource<List<Race>>> loadScheduleForSeason(Integer season) {
         return seasonScheduleRepository.loadScheduleForSeason(season);
     }
+
+    public void updateRace(Race race) {
+        seasonScheduleRepository.updateRace(race);
+    }
 }

@@ -10,7 +10,7 @@ import udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 
-@Database(entities = {Race.class, DriverStanding.class, ConstructorStanding.class}, version = 3)
+@Database(entities = {Race.class, DriverStanding.class, ConstructorStanding.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
     abstract public SeasonScheduleDao seasonScheduleDao();
     abstract public DriverStandingsDao driverStandingsDao();
@@ -55,6 +55,13 @@ public abstract class AppDatabase extends RoomDatabase {
                     "`constructor_name` TEXT, " +
                     "`constructor_nationality` TEXT, " +
                     "PRIMARY KEY(`season`, `position`))");
+        }
+    };
+
+    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE race ADD COLUMN isReminderSet INTEGER DEFAULT 0");
         }
     };
 }

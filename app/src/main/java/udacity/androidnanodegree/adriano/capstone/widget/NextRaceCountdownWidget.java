@@ -66,6 +66,7 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
                 String.valueOf(appWidgetId));
         serviceIntent.setData(intentData);
 
+        //TODO: perhaps replace this with a broadcast intent later. E.g.: reminder's alarm
         return PendingIntent.getService(
                 context,
                 0,
@@ -92,6 +93,7 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
         }
     }
 
+    //TODO: implement this!!!
     private Race getNextRace() {
         Race race = new Race();
         race.date = "2019-03-17";

@@ -1,7 +1,11 @@
 package udacity.androidnanodegree.adriano.capstone;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +27,7 @@ import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.Driv
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.RaceFragment;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
+import udacity.androidnanodegree.adriano.capstone.reminder.AlarmScheduler;
 
 public class MainActivity extends AppCompatActivity implements
         HasSupportFragmentInjector,
@@ -84,16 +89,20 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onListFragmentInteraction(Race item) {
         logItemSelectionEvent(item.round.toString(), item.raceName, "race");
+        launchBrowserIntentForUrl(item.url);
+//        AlarmScheduler.scheduleAlarmForRace(this, item);
     }
 
     @Override
     public void onListFragmentInteraction(DriverStanding item) {
         logItemSelectionEvent(item.driver.driverId, item.driver.code, "driver");
+        launchBrowserIntentForUrl(item.driver.url);
     }
 
     @Override
     public void onListFragmentInteraction(ConstructorStanding item) {
         logItemSelectionEvent(item.constructor.constructorId, item.constructor.name, "constructor");
+        launchBrowserIntentForUrl(item.constructor.url);
     }
 
     private void displayAboutActivity() {
@@ -111,5 +120,11 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    private void launchBrowserIntentForUrl(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 }
