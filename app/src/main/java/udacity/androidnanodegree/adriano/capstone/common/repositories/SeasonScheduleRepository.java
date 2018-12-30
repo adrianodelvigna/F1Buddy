@@ -56,4 +56,8 @@ public class SeasonScheduleRepository {
             }
         }.asLiveData();
     }
+
+    public void updateRace(Race race) {
+        seasonScheduleDao.updateRace(race);
+    }
 }

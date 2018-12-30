@@ -18,7 +18,7 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".fragments.driverstandings.DriverFragment"
-        tools:listitem="@layout/fragment_driver" />
+        tools:listitem="@layout/fragment_standing" />
 
     <LinearLayout
         android:id="@+id/loading"

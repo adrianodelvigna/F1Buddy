@@ -13,4 +13,6 @@
     <string name="generic_reminder_notification_title">F1 Buddy Reminder</string>
     <string name="reminder_set_toast">Reminder for %1$s set.</string>
     <string name="reminder_cancel_toast">Reminder for %1$s cancelled.</string>
+    <string name="reminder_button_content_description">Toggles the reminder for a race</string>
+    <string name="driver_full_name">%1$s %2$s</string>
 </resources>

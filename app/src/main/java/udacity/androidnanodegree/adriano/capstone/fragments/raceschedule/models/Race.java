@@ -39,6 +39,8 @@ public class Race {
     @Json(name = "time")
     public String time;
 
+    public Boolean isReminderSet = false;
+
     private Long epochSeconds;
 
     public Long getEpochSeconds() {
