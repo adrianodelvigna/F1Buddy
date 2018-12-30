@@ -2,6 +2,8 @@ package udacity.androidnanodegree.adriano.capstone;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -84,6 +86,17 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onListFragmentInteraction(Race item) {
         logItemSelectionEvent(item.round.toString(), item.raceName, "race");
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, getString(R.string.channel_id))
+                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
+                .setContentTitle(item.raceName)
+                .setContentText(getString(R.string.race_reminder_text))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        // notificationId is a unique int for each notification that must be defined
+        notificationManager.notify(0, mBuilder.build());
     }
 
     @Override
