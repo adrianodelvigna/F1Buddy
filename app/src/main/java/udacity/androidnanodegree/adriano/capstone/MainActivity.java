@@ -1,5 +1,7 @@
 package udacity.androidnanodegree.adriano.capstone;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -87,17 +89,20 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onListFragmentInteraction(Race item) {
         logItemSelectionEvent(item.round.toString(), item.raceName, "race");
-        AlarmScheduler.scheduleAlarmForRace(this, item);
+        launchBrowserIntentForUrl(item.url);
+//        AlarmScheduler.scheduleAlarmForRace(this, item);
     }
 
     @Override
     public void onListFragmentInteraction(DriverStanding item) {
         logItemSelectionEvent(item.driver.driverId, item.driver.code, "driver");
+        launchBrowserIntentForUrl(item.driver.url);
     }
 
     @Override
     public void onListFragmentInteraction(ConstructorStanding item) {
         logItemSelectionEvent(item.constructor.constructorId, item.constructor.name, "constructor");
+        launchBrowserIntentForUrl(item.constructor.url);
     }
 
     private void displayAboutActivity() {
@@ -115,5 +120,11 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    private void launchBrowserIntentForUrl(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 }
