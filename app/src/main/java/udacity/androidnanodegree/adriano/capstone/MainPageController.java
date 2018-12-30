@@ -1,5 +1,6 @@
 package udacity.androidnanodegree.adriano.capstone;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,9 @@ public class MainPageController {
 
     @Inject
     public MainPageController(MainActivity mainActivity) {
-        mainPageAdapter = new MainPageAdapter(mainActivity.getSupportFragmentManager());
+        mainPageAdapter = new MainPageAdapter(
+                mainActivity.getSupportFragmentManager(),
+                mainActivity);
     }
 
     public MainPageAdapter getMainPageAdapter() {
@@ -25,8 +28,11 @@ public class MainPageController {
     }
 
     private static class MainPageAdapter extends FragmentPagerAdapter {
-        public MainPageAdapter(FragmentManager fm) {
+        private final Context context;
+
+        public MainPageAdapter(FragmentManager fm, Context context) {
             super(fm);
+            this.context = context;
         }
 
         @Override
@@ -48,9 +54,9 @@ public class MainPageController {
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0: return "Races";
-                case 1: return "Drivers";
-                case 2: return "Constructors";
+                case 0: return context.getString(R.string.races_page_title);
+                case 1: return context.getString(R.string.drivers_page_title);
+                case 2: return context.getString(R.string.constructors_page_title);
             }
             return super.getPageTitle(position);
         }
