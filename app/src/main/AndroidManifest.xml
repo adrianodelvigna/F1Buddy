@@ -3,6 +3,7 @@
     package="udacity.androidnanodegree.adriano.capstone">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SET_ALARM"/>
 
     <application
         android:name=".F1BuddyApp"
@@ -33,7 +34,12 @@
         <service
             android:name=".widget.NextRaceCountdownService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <receiver
+            android:name=".reminder.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

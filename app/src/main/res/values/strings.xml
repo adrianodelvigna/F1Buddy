@@ -8,4 +8,9 @@
     <string name="channel_name">F1 Buddy</string>
     <string name="channel_description">F1 race reminders from F1 Buddy app.</string>
     <string name="race_reminder_text">The race is about to start in 10 minutes!</string>
+    <string name="grand_prix_reminder_action">udacity.androidnanodegree.adriano.capstone.reminder.grandPrix</string>
+    <string name="EXTRA_GRANDPRIX_NAME">EXTRA_GRANDPRIX_NAME</string>
+    <string name="generic_reminder_notification_title">F1 Buddy Reminder</string>
+    <string name="reminder_set_toast">Reminder for %1$s set.</string>
+    <string name="reminder_cancel_toast">Reminder for %1$s cancelled.</string>
 </resources>
