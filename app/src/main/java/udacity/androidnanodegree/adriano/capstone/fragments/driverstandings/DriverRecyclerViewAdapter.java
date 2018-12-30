@@ -50,6 +50,7 @@ public class DriverRecyclerViewAdapter extends RecyclerView.Adapter<DriverRecycl
         holder.itemTitle.setText(driverFullName);
         holder.itemSubtitle.setText(driverStanding.constructor.name);
         holder.driverPoints.setText(driverStanding.points.toString());
+        holder.avatar.setImageResource(R.drawable.ic_person_white_24dp);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

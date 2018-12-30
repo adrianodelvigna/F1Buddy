@@ -46,7 +46,7 @@ public class ConstructorRecyclerViewAdapter extends RecyclerView.Adapter<Constru
         holder.itemTitle.setText(constructorStanding.constructor.name);
         holder.itemSubtitle.setText(constructorStanding.constructor.nationality);
         holder.constructorPoints.setText(constructorStanding.points.toString());
-        holder.avatar.setImageResource(R.drawable.ic_directions_car_black_24dp);
+        holder.avatar.setImageResource(R.drawable.ic_directions_car_white_24dp);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
