@@ -28,17 +28,14 @@
             android:layout_gravity="top">
 
             <android.support.design.widget.TabItem
-                android:text="Races"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content" />
 
             <android.support.design.widget.TabItem
-                android:text="Drivers"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content" />
 
             <android.support.design.widget.TabItem
-                android:text="Constructors"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content" />
 

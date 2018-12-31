@@ -18,4 +18,8 @@
     <string name="races_page_title">Races</string>
     <string name="drivers_page_title">Drivers</string>
     <string name="constructors_page_title">Constructors</string>
+    <string name="widget_days_left_label">days</string>
+    <string name="widget_hours_left_label">hours</string>
+    <string name="widget_mins_left_label">mins</string>
+    <string name="widget_next_race_label">To next F1 race!</string>
 </resources>
