@@ -1,5 +1,6 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.driverstandings;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,8 @@ public class DriverRecyclerViewAdapter extends RecyclerView.Adapter<DriverRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Context context = holder.mView.getContext();
+
         final DriverStanding driverStanding = driverStandings.get(position);
         holder.mItem = driverStanding;
         holder.itemNumber.setText(driverStanding.positionText);
@@ -51,6 +54,8 @@ public class DriverRecyclerViewAdapter extends RecyclerView.Adapter<DriverRecycl
         holder.itemSubtitle.setText(driverStanding.constructor.name);
         holder.driverPoints.setText(driverStanding.points.toString());
         holder.avatar.setImageResource(R.drawable.ic_person_white_24dp);
+        holder.avatar.setContentDescription(
+                context.getString(R.string.driver_avatar_content_description, driverFullName));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

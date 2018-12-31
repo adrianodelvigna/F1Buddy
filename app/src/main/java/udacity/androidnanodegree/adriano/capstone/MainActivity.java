@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private void displayAboutActivity() {
         logItemSelectionEvent("action_about", "About", "navigation");
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
     private void logItemSelectionEvent(String id, String name, String type) {

@@ -32,6 +32,17 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.hoursLeft, timeLeft.hours.toString());
         remoteViews.setTextViewText(R.id.minutesLeft, timeLeft.minutes.toString());
 
+        Intent updateIntent = new Intent(context, NextRaceCountdownWidget.class);
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+        int[] idArray = new int[]{appWidgetId};
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, idArray);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, appWidgetId, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        remoteViews.setOnClickPendingIntent(R.id.clickableArea, pendingIntent);
+
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
 
@@ -40,7 +51,7 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
-            setAlarm(context, appWidgetId, AlarmStatus.ENABLED);
+            //setAlarm(context, appWidgetId, AlarmStatus.ENABLED);
         }
     }
 
@@ -58,7 +69,7 @@ public class NextRaceCountdownWidget extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) setAlarm(context, appWidgetId, AlarmStatus.DISABLED);
+        //for (int appWidgetId : appWidgetIds) setAlarm(context, appWidgetId, AlarmStatus.DISABLED);
     }
 
     private PendingIntent createPendingCountdownServiceIntent(Context context, int appWidgetId) {

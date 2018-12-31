@@ -1,17 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
     signingConfigs {
         ReleaseSigning {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias 'udacity_capstone_key'
+            keyPassword '1234_key_passwd'
+            storeFile rootProject.file('signing_keystore')
+            storePassword '1234_store_passwd'
         }
     }
     compileSdkVersion 28
