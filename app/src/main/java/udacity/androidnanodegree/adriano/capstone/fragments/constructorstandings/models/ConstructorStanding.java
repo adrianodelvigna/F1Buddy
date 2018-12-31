@@ -1,59 +1,32 @@
 
 package udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings.models;
 
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.support.annotation.NonNull;
+
 import com.squareup.moshi.Json;
 
+@Entity(primaryKeys = {"season", "position"}, tableName = "constructorstanding")
 public class ConstructorStanding {
 
+    @NonNull
+    public Integer season;
+
+    @NonNull
     @Json(name = "position")
-    private String position;
+    public Integer position;
+
     @Json(name = "positionText")
-    private String positionText;
+    public String positionText;
+
     @Json(name = "points")
-    private String points;
+    public Integer points;
+
     @Json(name = "wins")
-    private String wins;
+    public Integer wins;
+
+    @Embedded(prefix = "constructor_")
     @Json(name = "Constructor")
-    private Constructor constructor;
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getPositionText() {
-        return positionText;
-    }
-
-    public void setPositionText(String positionText) {
-        this.positionText = positionText;
-    }
-
-    public String getPoints() {
-        return points;
-    }
-
-    public void setPoints(String points) {
-        this.points = points;
-    }
-
-    public String getWins() {
-        return wins;
-    }
-
-    public void setWins(String wins) {
-        this.wins = wins;
-    }
-
-    public Constructor getConstructor() {
-        return constructor;
-    }
-
-    public void setConstructor(Constructor constructor) {
-        this.constructor = constructor;
-    }
-
+    public Constructor constructor;
 }

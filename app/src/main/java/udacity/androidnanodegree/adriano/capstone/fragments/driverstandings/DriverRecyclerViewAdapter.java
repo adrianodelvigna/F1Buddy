@@ -4,8 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.DriverFragment.OnListFragmentInteractionListener;
 import udacity.androidnanodegree.adriano.capstone.fragments.driverstandings.models.DriverStanding;
@@ -30,15 +33,24 @@ public class DriverRecyclerViewAdapter extends RecyclerView.Adapter<DriverRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_driver, parent, false);
+                .inflate(R.layout.fragment_standing, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = driverStandings.get(position);
-        holder.mIdView.setText(driverStandings.get(position).getPositionText());
-        holder.mContentView.setText(driverStandings.get(position).getDriver().getDriverId());
+        final DriverStanding driverStanding = driverStandings.get(position);
+        holder.mItem = driverStanding;
+        holder.itemNumber.setText(driverStanding.positionText);
+        final String driverFullName = holder.mView
+                .getContext()
+                .getString(R.string.driver_full_name,
+                        driverStanding.driver.givenName,
+                        driverStanding.driver.familyName);
+        holder.itemTitle.setText(driverFullName);
+        holder.itemSubtitle.setText(driverStanding.constructor.name);
+        holder.driverPoints.setText(driverStanding.points.toString());
+        holder.avatar.setImageResource(R.drawable.ic_person_white_24dp);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +71,22 @@ public class DriverRecyclerViewAdapter extends RecyclerView.Adapter<DriverRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        @BindView(R.id.itemNumber) TextView itemNumber;
+        @BindView(R.id.itemTitle) TextView itemTitle;
+        @BindView(R.id.itemSubtitle) TextView itemSubtitle;
+        @BindView(R.id.points) TextView driverPoints;
+        @BindView(R.id.avatar) ImageView avatar;
         public DriverStanding mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            ButterKnife.bind(this, view);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + itemTitle.getText() + "'";
         }
     }
 }

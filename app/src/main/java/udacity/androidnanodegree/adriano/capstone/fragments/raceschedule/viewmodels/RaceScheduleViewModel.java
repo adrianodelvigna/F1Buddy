@@ -1,54 +1,29 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.RaceScheduleService;
-import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.RaceTable;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
+import udacity.androidnanodegree.adriano.capstone.common.Resource;
+import udacity.androidnanodegree.adriano.capstone.common.repositories.SeasonScheduleRepository;
 
 public class RaceScheduleViewModel extends ViewModel {
-    private MutableLiveData<RaceTable> raceTableMutableLiveData;
-    private MutableLiveData<Boolean> isLoadingMutableLiveData;
+    SeasonScheduleRepository seasonScheduleRepository;
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        compositeDisposable.dispose();
+    @Inject
+    public RaceScheduleViewModel(SeasonScheduleRepository seasonScheduleRepository) {
+        this.seasonScheduleRepository = seasonScheduleRepository;
     }
 
-    public LiveData<Boolean> getIsLoadingLiveData() {
-        if (isLoadingMutableLiveData == null) {
-            isLoadingMutableLiveData = new MutableLiveData<>();
-        }
-        return isLoadingMutableLiveData;
+    public LiveData<Resource<List<Race>>> loadScheduleForSeason(Integer season) {
+        return seasonScheduleRepository.loadScheduleForSeason(season);
     }
 
-    public LiveData<RaceTable> getRaceTableLiveData() {
-        if (raceTableMutableLiveData == null) {
-            raceTableMutableLiveData = new MutableLiveData<>();
-            loadRaceTable();
-        }
-        return raceTableMutableLiveData;
-    }
-
-    private void loadRaceTable() {
-        RaceScheduleService raceScheduleService = new RaceScheduleService();
-        isLoadingMutableLiveData.setValue(true);
-        compositeDisposable.add(
-        raceScheduleService
-                .getRaceTableForSeason(2018)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(raceTable -> {
-                    raceTableMutableLiveData.setValue(raceTable);
-                    isLoadingMutableLiveData.setValue(false);
-                })
-        );
+    public void updateRace(Race race) {
+        seasonScheduleRepository.updateRace(race);
     }
 }

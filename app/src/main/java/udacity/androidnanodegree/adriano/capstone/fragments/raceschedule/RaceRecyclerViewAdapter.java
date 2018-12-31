@@ -4,13 +4,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.threeten.bp.DateTimeUtils;
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneId;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import udacity.androidnanodegree.adriano.capstone.R;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.RaceFragment.OnListFragmentInteractionListener;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
-
-import java.util.List;
+import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Race} and makes a call to the
@@ -21,10 +32,16 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
 
     private final List<Race> mRaces;
     private final OnListFragmentInteractionListener mListener;
+    private final RaceScheduleViewModel raceScheduleViewModel;
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, MMM d, YYYY 'at' h:mm a");
 
-    public RaceRecyclerViewAdapter(List<Race> races, OnListFragmentInteractionListener listener) {
-        mRaces = races;
-        mListener = listener;
+    public RaceRecyclerViewAdapter(
+            List<Race> races,
+            RaceScheduleViewModel raceScheduleViewModel,
+            OnListFragmentInteractionListener listener) {
+        this.mRaces = races;
+        this.raceScheduleViewModel = raceScheduleViewModel;
+        this.mListener = listener;
     }
 
     @Override
@@ -36,11 +53,15 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mRaces.get(position);
-        holder.mIdView.setText(mRaces.get(position).getRound());
-        holder.mContentView.setText(mRaces.get(position).getRaceName());
+        final Race race = mRaces.get(position);
+        holder.mItem = race;
+        holder.mIdView.setText(race.round.toString());
+        holder.mContentView.setText(race.raceName);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        Instant instant = Instant.ofEpochSecond(race.getEpochSeconds());
+        holder.mDate.setText(simpleDateFormat.format(DateTimeUtils.toDate(instant)));
+
+        holder.clickableArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
@@ -48,6 +69,14 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
+            }
+        });
+
+        // TODO: implement this!
+        holder.reminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
@@ -58,16 +87,19 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        final View mView;
+        @BindView(R.id.clickableArea) View clickableArea;
+        @BindView(R.id.itemNumber) TextView mIdView;
+        @BindView(R.id.itemTitle) TextView mContentView;
+        @BindView(R.id.itemSubtitle) TextView mDate;
+        @BindView(R.id.reminderButton) ImageView reminderButton;
+
         public Race mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            ButterKnife.bind(this, view);
         }
 
         @Override

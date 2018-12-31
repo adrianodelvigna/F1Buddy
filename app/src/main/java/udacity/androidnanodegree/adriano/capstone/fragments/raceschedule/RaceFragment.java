@@ -1,8 +1,10 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import udacity.androidnanodegree.adriano.capstone.R;
+import udacity.androidnanodegree.adriano.capstone.common.Resource;
+import udacity.androidnanodegree.adriano.capstone.common.di.Injectable;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.models.Race;
 import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmodels.RaceScheduleViewModel;
+
+import static udacity.androidnanodegree.adriano.capstone.common.Status.LOADING;
 
 /**
  * A fragment representing a list of Items.
@@ -25,7 +35,7 @@ import udacity.androidnanodegree.adriano.capstone.fragments.raceschedule.viewmod
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class RaceFragment extends Fragment {
+public class RaceFragment extends Fragment implements Injectable {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -36,6 +46,11 @@ public class RaceFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.loading) LinearLayout loading;
     @BindView(R.id.list) RecyclerView recyclerView;
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
+    private RaceScheduleViewModel raceScheduleViewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -61,19 +76,17 @@ public class RaceFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+    }
 
-        RaceScheduleViewModel raceScheduleViewModel = ViewModelProviders.of(getActivity()).get(RaceScheduleViewModel.class);
-        raceScheduleViewModel.getIsLoadingLiveData().observe(this, isLoading -> {
-            if (isLoading != null) {
-                loading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-                recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
-            }
-        });
-        raceScheduleViewModel.getRaceTableLiveData().observe(this, raceTable -> {
-            if (raceTable != null) {
-                recyclerView.swapAdapter(new RaceRecyclerViewAdapter(raceTable.getRaces(), mListener), true);
-            }
-        });
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        raceScheduleViewModel = ViewModelProviders
+                .of(this, viewModelFactory)
+                .get(RaceScheduleViewModel.class);
+        raceScheduleViewModel
+                .loadScheduleForSeason(2018)
+                .observe(this, this::scheduleForSeasonObserver);
     }
 
     @Override
@@ -89,11 +102,27 @@ public class RaceFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        recyclerView.setAdapter(null);
 
         return view;
     }
 
+    private void scheduleForSeasonObserver(Resource<List<Race>> listResource) {
+        loading.setVisibility(listResource.status == LOADING ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(listResource.status == LOADING ? View.GONE : View.VISIBLE);
+
+        switch (listResource.status) {
+            case SUCCESS:
+                recyclerView.swapAdapter(
+                        new RaceRecyclerViewAdapter(
+                                listResource.data,
+                                raceScheduleViewModel,
+                                mListener),
+                        true);
+                break;
+            case ERROR:
+                break;
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
