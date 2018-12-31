@@ -1,5 +1,6 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.raceschedule;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Context context = holder.mView.getContext();
         final Race race = mRaces.get(position);
         holder.mItem = race;
         holder.mIdView.setText(race.round.toString());
@@ -60,6 +62,9 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
 
         Instant instant = Instant.ofEpochSecond(race.getEpochSeconds());
         holder.mDate.setText(simpleDateFormat.format(DateTimeUtils.toDate(instant)));
+
+        holder.reminderButton.setContentDescription(
+                context.getString(R.string.reminder_button_content_description, race.raceName));
 
         holder.clickableArea.setOnClickListener(new View.OnClickListener() {
             @Override

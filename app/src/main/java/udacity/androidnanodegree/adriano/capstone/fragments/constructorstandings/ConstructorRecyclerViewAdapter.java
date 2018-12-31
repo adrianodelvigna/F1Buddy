@@ -1,5 +1,6 @@
 package udacity.androidnanodegree.adriano.capstone.fragments.constructorstandings;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,8 @@ public class ConstructorRecyclerViewAdapter extends RecyclerView.Adapter<Constru
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Context context = holder.mView.getContext();
+
         ConstructorStanding constructorStanding = constructorStandings.get(position);
         holder.mItem = constructorStanding;
         holder.itemNumber.setText(constructorStanding.positionText);
@@ -47,6 +50,8 @@ public class ConstructorRecyclerViewAdapter extends RecyclerView.Adapter<Constru
         holder.itemSubtitle.setText(constructorStanding.constructor.nationality);
         holder.constructorPoints.setText(constructorStanding.points.toString());
         holder.avatar.setImageResource(R.drawable.ic_directions_car_white_24dp);
+        holder.avatar.setContentDescription(
+                context.getString(R.string.constructor_avatar_content_description, constructorStanding.constructor.name));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
