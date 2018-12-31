@@ -3,7 +3,7 @@
     package="udacity.androidnanodegree.adriano.capstone">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.SET_ALARM" />
 
     <application
         android:name=".F1BuddyApp"
@@ -39,7 +39,9 @@
         <receiver
             android:name=".reminder.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
+
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>
