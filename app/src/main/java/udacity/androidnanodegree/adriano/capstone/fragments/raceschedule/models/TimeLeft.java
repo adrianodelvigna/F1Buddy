@@ -7,11 +7,9 @@ import org.threeten.bp.Duration;
 import java.util.Locale;
 
 public class TimeLeft {
-    public long days;
-    public long hours;
-    public long minutes;
-
-    public TimeLeft() {}
+    public final Long days;
+    public final Long hours;
+    public final Long minutes;
 
     public TimeLeft(Duration duration) {
         days = duration.toDays();
